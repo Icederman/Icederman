@@ -1,16 +1,19 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerRb;
-
+    public float jumpForce = 10.0f;
+    private bool isOnGround = true;
+    public float gravityModifier;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
-        playerRb.AddForce(Vector3.up * 500);
+        Physics.gravity *= gravityModifier;
 
 
     }
@@ -19,5 +22,22 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         
+        if(Input.GetKeyDown(KeyCode.Space) && isOnGround)
+        {
+            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isOnGround = false;
+        }
+
+     
     }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        isOnGround = true;
+    }
+
+
+
+
 }
