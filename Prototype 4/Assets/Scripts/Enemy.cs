@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
 
     public float speed; // Speed of the enemy
@@ -8,6 +8,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
     Rigidbody enemyRb; // Reference to the enemy's Rigidbody    
     GameObject player; // Reference to the player GameObject
     Vector3 lookDirection; // Direction vector towards the player
+
+    float bottomBound = -10; // Boundary limit for the enemy
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -22,7 +24,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         lookDirection = (player.transform.position - transform.position).normalized;
         
-
+        if(transform.position.y < bottomBound)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void FixedUpdate()
